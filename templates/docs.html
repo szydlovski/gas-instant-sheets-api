@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <base target="_top">
+		<style>
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', 'Roboto', sans-serif;
+  font-size: 14px;
+  --base: 8px;
+  --border-radius: calc(var(--base) * 1);
+  --accent-color: rgb(87, 28, 223);
+  --details-arrow: 8px;
+}
+
+.app {
+  background-color: #fff;
+  height: 100vh;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: 1fr;
+      grid-template-rows: 1fr;
+  border-top: 1px solid #bbb;
+}
+
+.app-header {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.app-content {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 250px 1fr;
+      grid-template-columns: 250px 1fr;
+  -ms-grid-rows: 1fr;
+      grid-template-rows: 1fr;
+  min-height: 0;
+}
+
+.menu-header {
+  padding: 0 calc(var(--base) * 3);
+  margin-bottom: calc(var(--base) * 3);
+}
+
+.menu-header h1 {
+  color: var(--accent-color);
+  font-size: 1.7em;
+}
+
+.menu-header h4 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.85em;
+  color: #aaa;
+}
+
+@media (max-width: 768px) {
+  body {
+    --base: 4px;
+    --border-radius: calc(var(--base) * 1.5);
+  }
+  .app-content {
+    -ms-grid-columns: 175px 1fr;
+        grid-template-columns: 175px 1fr;
+  }
+  .menu-header h1 {
+    font-size: 1.25em;
+  }
+  .menu-header h4 {
+    font-size: 0.75em;
+  }
+}
+
+.app-content details summary {
+  display: block;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.app-content details summary:after {
+  content: '';
+  display: block;
+  width: calc(var(--details-arrow) * 2);
+  height: var(--details-arrow);
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  -webkit-clip-path: polygon(0% 0%, 20% 0%, 50% 60%, 80% 0%, 100% 0%, 50% 100%);
+          clip-path: polygon(0% 0%, 20% 0%, 50% 60%, 80% 0%, 100% 0%, 50% 100%);
+  -webkit-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+          transform: translateY(-50%) translateX(-50%) rotate(90deg);
+}
+
+.app-content details summary:hover:after {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.app-content details[open] summary:after {
+  -webkit-transform: translateY(-50%) translateX(-50%) rotate(0);
+          transform: translateY(-50%) translateX(-50%) rotate(0);
+}
+
+.content-menu {
+  overflow-x: auto;
+  background-color: #f4f4f4;
+  padding: calc(var(--base) * 6) 0;
+  border-right: 1px solid #bbb;
+}
+
+.content-menu details[open] summary .menu-item {
+  color: inherit;
+}
+
+.content-menu details[open] summary:after {
+  -webkit-transform: translateY(-50%) translateX(-50%) rotate(0);
+          transform: translateY(-50%) translateX(-50%) rotate(0);
+}
+
+.content-menu summary,
+.content-menu li > a {
+  color: #888;
+  padding: calc(var(--base) * 2) calc(var(--base) * 3);
+}
+
+.content-menu summary:hover,
+.content-menu li > a:hover {
+  color: #222;
+}
+
+.content-menu ul {
+  list-style: none;
+}
+
+.content-menu ul ul {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.bullet {
+  color: inherit;
+  font-weight: bold;
+  border-radius: 0.2em;
+  padding: 0 0.2em;
+  position: relative;
+  display: inline-block;
+  -webkit-transform-origin: left;
+          transform-origin: left;
+  -webkit-transform: scale(0.7) translateX(0%);
+          transform: scale(0.7) translateX(0%);
+  -webkit-box-shadow: 0 0 0 2px currentColor;
+          box-shadow: 0 0 0 2px currentColor;
+}
+
+.bullet-get {
+  color: #2ac17a;
+  -webkit-box-shadow: 0 0 0 0.125em #2ac17a;
+          box-shadow: 0 0 0 0.125em #2ac17a;
+}
+
+.bullet-api {
+  color: var(--accent-color);
+  -webkit-box-shadow: 0 0 0 0.125em var(--accent-color);
+          box-shadow: 0 0 0 0.125em var(--accent-color);
+}
+
+.menu-item {
+  display: inline-block;
+  text-decoration: none;
+  color: #888;
+}
+
+.menu-item:hover {
+  color: #222;
+}
+
+.content-docs {
+  overflow-x: auto;
+  background-color: #ddd;
+}
+
+.content-docs summary {
+  background-color: #eee;
+  padding: var(--base) calc(var(--base) * 1.5);
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #888;
+  font-size: 0.9em;
+  border: 1px solid #aaa;
+  border-radius: var(--border-radius);
+}
+
+.content-docs details[open] > summary {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.content-docs .docs-details-content {
+  width: 100%;
+  overflow-x: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #f9f9f9;
+  border: 1px solid #aaa;
+  border-top: 0;
+}
+
+.docs-section {
+  padding: calc(var(--base) * 6) calc(var(--base) * 6);
+  background-color: #fff;
+}
+
+.docs-section > *:not(:last-child) {
+  margin-bottom: calc(var(--base) * 2);
+}
+
+.docs-section code {
+  background-color: var(--accent-color);
+  color: #fff;
+  padding: calc(var(--base) / 2);
+  border-radius: calc(var(--border-radius) / 2);
+  font-size: 0.9em;
+}
+
+.docs-section pre {
+  padding: calc(var(--base) * 2);
+  overflow-x: auto;
+  background-color: #333;
+  border-radius: var(--border-radius);
+  color: #aaa;
+}
+
+.docs-section pre e {
+  color: #fff;
+}
+
+.docs-section:not(:last-child) {
+  border-bottom: 1px solid #bbb;
+}
+
+.docs-section h2 {
+  margin-bottom: calc(var(--base) * 3);
+}
+
+.docs-section details table {
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1em;
+}
+
+.docs-section details table thead {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.docs-section details table th,
+.docs-section details table td {
+  border: calc(var(--base) * 2) solid transparent;
+}
+
+.docs-section-text > *:not(:last-child) {
+  margin-bottom: calc(var(--base) * 3);
+}
+
+.docs-section-apitable > div:not(:last-child) {
+  margin-bottom: calc(var(--base) * 6);
+}
+
+.apitable-info > *:not(:last-child) {
+  margin-bottom: calc(var(--base) * 3);
+}
+
+.apitable-endpoint > div:not(:last-child) {
+  margin-bottom: calc(var(--base) * 2);
+}
+
+.endpoint-info {
+  margin-bottom: calc(var(--base) * 2);
+}
+
+.endpoint-info p {
+  margin-bottom: calc(var(--base) * 2);
+}
+
+.endpoint-response figure {
+  width: 100%;
+}
+
+.endpoint-response pre {
+  border-radius: 0;
+}
+/*# sourceMappingURL=style.css.map */
+    </style>
+	</head>
+	<body style="--accent-color: <?= (typeof metadata.config.CONFIG_DOCS_ACCENT_COLOR === 'string' && metadata.config.CONFIG_DOCS_ACCENT_COLOR !== '') ? metadata.config.CONFIG_DOCS_ACCENT_COLOR : '#6523e8' ?>">
+    <div class="app">
+      <div class="app-content">
+        <div class="content-menu">
+          <div class="menu-header">
+            <h1><?= (!metadata.config.INFO_NAME || metadata.config.INFO_NAME === "") ? "InstantSheetAPI" : metadata.config.INFO_NAME ?></h1>
+            <h4>API Reference</h4>
+          </div>
+          <ul>
+            <li><a target="_self" href="#getting-started" class="menu-item">Getting started</a></li>
+            <li><a target="_self" href="#about-this-api" class="menu-item">About this API</a></li>
+            <? if(metadata.config.CONFIG_AUTH_REQUIRED) { ?>
+            <li><a target="_self" href="#authentication" class="menu-item">Authentication</a></li>
+            <? } ?>
+            <? for(const table of metadata.tables) { ?>
+            <li>
+              <details>
+                <summary>
+                  <a target="_self" href="#table-<?= table.url ?>" class="menu-item"><?= table.name ?></a>
+                </summary>
+                <div class="menu-submenu">
+                  <ul>
+                  <?  for(const endpoint of table.endpoints) { ?>
+                  <li><a target="_self" href="#endpoint-<?= table.url ?>-<?= endpoint.url ?>" class="menu-item"><span class="bullet bullet-<?= endpoint.method.toLowerCase() ?>"><?= endpoint.method ?></span><?= endpoint.name ?></a></li>
+                  <?  } ?>
+                  </ul>
+                </div>
+              </details>
+            </li>
+            <? } ?>
+          </ul>
+        </div>
+        <div class="content-docs">
+          <div id="getting-started" class="docs-section">
+            <h2>Getting started</h2>
+            <p>Root</p>
+            <pre><e><?!= ScriptApp.getService().getUrl() ?></e></pre>
+          </div>
+          <div id="about-this-api" class="docs-section">
+            <h2>About this API</h2>
+            <p><?= (typeof metadata.config.INFO_ABOUT === 'string' && metadata.config.INFO_ABOUT !== '') ? metadata.config.INFO_ABOUT : 'This API and its documentation was generated automatically.' ?></p>
+          </div>
+          <? if(metadata.config.CONFIG_AUTH_REQUIRED) { ?>
+          <div id="authentication" class="docs-section docs-section-auth">
+            <h2>Authentication</h2>
+            <p>This API uses key based authentication.</p>
+            <p>Place your API key in the <code>Authorization</code> header to authenticate your requests.</p>
+          </div>
+          <? } ?>
+          <? for(const table of metadata.tables) { ?>
+          <div id="table-<?= table.url ?>" class="docs-section docs-section-apitable">
+            <div class="apitable-info">
+              <h2><?= table.name ?></h2>
+              <? if(table.description) { ?>
+              <p><?= table.description ?></p>
+              <? } ?>
+              <details>
+                <summary>Fields</summary>
+                <div class="docs-details-content">
+                  <figure>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <? for (const field of table.fields) { ?>
+                        <tr>
+                          <td><?= field.name ?></td>
+                          <td>
+                            <code><?= field.type ?></code>
+                          </td>
+                          <td><?= field.description ?></td>
+                        </tr>
+                        <? } ?>
+                      </tbody>
+                    </table>
+                  </figure>
+                </div>
+              </details>
+            </div>
+          <? for(const endpoint of table.endpoints) { ?>
+            <div class="apitable-endpoint">
+              <div class="endpoint-info">
+                <h2 id="endpoint-<?= table.url ?>-<?= endpoint.url ?>">
+                  <span class="bullet bullet-<?= endpoint.method.toLowerCase() ?>"><?= endpoint.method ?></span>
+                  <span><?= endpoint.name ?></span>
+                </h2>
+                <p><?= endpoint.description ?></p>
+                <pre><?!= ScriptApp.getService().getUrl() ?><e><?= endpoint.url ?></e></pre>
+              </div>
+              <div class="endpoint-parameters">
+                <? if(endpoint.params.length > 0) { ?>
+                <details open>
+                  <summary>Parameters</summary>
+                  <div class="docs-details-content">
+                    <figure>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required?</th>
+                            <th>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <? for(const param of endpoint.params) { ?>
+                          <tr>
+                            <td><?= param.name ?></td>
+                            <td><code><?= param.type ?></code></td>
+                            <td><?= param.required ? 'Yes' : 'No' ?></td>
+                            <td><?= param.description ?></td>
+                          </tr>
+                          <? } ?>
+                        </tbody>
+                      </table>
+                    </figure>
+                  </div>
+                </details>
+                <? } ?>
+              </div>
+              <div class="endpoint-response">
+                <details open>
+                  <summary>Example response</summary>
+                  <div class="docs-details-content">
+                    <figure>
+                      <pre><?= endpoint.response ?></pre>
+                    </figure>
+                  </div>
+                </details>
+              </div>
+            </div>
+            <? } ?>
+          </div>
+          <? } ?>
+        </div>
+      </div>
+    </div>
+	</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+</head>
+<body>
+  <? if(metadata.error) { ?>
+  <details class="error-info" open>
+    <h2>Error</h2>
+    <h4>(this template is a placeholder)</h4>
+    <pre><?= JSON.stringify(metadata.error, null, 4) ?></pre>
+  </details>
+  <? } ?>
+</body>
+</html>
